@@ -46,11 +46,9 @@ namespace AppStructure
 
             try
             {
-                // If FROM screen is not presented, don't need to turn it off
                 if (_stateViews.TryGetValue(transferInfo.From, out var stateView))
                     FromStateViewTransferHandle(transferInfo, stateView);
 
-                // If TO screen is not presented, close all
                 if (_stateViews.TryGetValue(transferInfo.To, out stateView))
                     ToStateViewTransferHandle(transferInfo, stateView);
                 
