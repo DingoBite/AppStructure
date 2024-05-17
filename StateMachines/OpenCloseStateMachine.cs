@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using AppStructure.Utils;
 using UnityEngine;
-using Utils.Extensions;
 
 namespace AppStructure.StateMachines
 {

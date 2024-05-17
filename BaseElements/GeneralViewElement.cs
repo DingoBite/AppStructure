@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Utils.MonoBehaviours;
+using AppStructure.Utils;
 
 namespace AppStructure.BaseElements
 {
