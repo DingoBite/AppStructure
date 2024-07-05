@@ -3,7 +3,15 @@ using UnityEngine;
 
 namespace AppStructure.BaseElements
 {
-    public abstract class AppPartRoot<TAppModel, TAppConfig> : MonoBehaviour
+    public interface IAppStructurePart<in TAppModel, in TAppConfig>
+    {
+        void PreInitialize();
+        Task<bool> InitializeAsync(TAppConfig appConfig);
+        Task<bool> BindAsync(TAppModel appModel);
+        Task<bool> PostInitializeAsync();
+    }
+
+    public abstract class AppPartRoot<TAppModel, TAppConfig> : MonoBehaviour, IAppStructurePart<TAppModel, TAppConfig>
     {
         public abstract void PreInitialize();
         public abstract Task<bool> InitializeAsync(TAppConfig appConfig);

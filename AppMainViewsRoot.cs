@@ -12,6 +12,7 @@ namespace AppStructure
         [SerializedDictionary("State", "View")]
         [SerializeField] private SerializedDictionary<TState, AppStateView<TState, TAppModel, TAppConfig>> _stateViews;
         [SerializeField] private List<StaticStateViewElement<TState, TAppModel, TAppConfig>> _staticScreenViewElements;
+        [SerializeField] private List<GeneralViewElement<TAppModel, TAppConfig>> _generalViewElements;
 
         public override void PreInitialize()
         {
@@ -23,6 +24,7 @@ namespace AppStructure
         {
             await _stateViews.Values.ProcessAppStateViewsAsync(s => s.InitializeAsync(appConfig));
             await _staticScreenViewElements.ProcessStaticStateViewsAsync(s => s.InitializeAsync(appConfig));
+            await _generalViewElements.ProcessGeneralViewElementsAsync(s => s.InitializeAsync(appConfig));
             return true;
         }
 
@@ -30,6 +32,7 @@ namespace AppStructure
         {
             await _stateViews.Values.ProcessAppStateViewsAsync(s => s.BindAsync(appModel));
             await _staticScreenViewElements.ProcessStaticStateViewsAsync(s => s.BindAsync(appModel));
+            await _generalViewElements.ProcessGeneralViewElementsAsync(s => s.BindAsync(appModel));
             return true;
         }
 
@@ -37,6 +40,7 @@ namespace AppStructure
         {
             await _stateViews.Values.ProcessAppStateViewsAsync(g => g.PostInitializeAsync());
             await _staticScreenViewElements.ProcessStaticStateViewsAsync(g => g.PostInitializeAsync());
+            await _generalViewElements.ProcessGeneralViewElementsAsync(s => s.PostInitializeAsync());
             return true;
         }
         
