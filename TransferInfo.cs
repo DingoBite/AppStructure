@@ -32,7 +32,7 @@ namespace AppStructure
             return To.CompareTo(other.To);
         }
 
-        public bool IsNone => From.Equals(default) && To.Equals(default);
+        public bool IsNone => From.Equals(default(TState)) && To.Equals(default(TState));
         public bool ValidBack => !IsNone && !InvalidBackStates.Contains(From) && !InvalidBackStates.Contains(To);
         public static readonly TransferInfo<TState> None = new (default, default);
 
