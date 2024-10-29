@@ -86,7 +86,7 @@ namespace AppStructure.StateMachines
 
         private void PushTransfer(TransferInfo<TState> screenTransferInfo)
         {
-            if (!screenTransferInfo.ValidBack)
+            if (_historySize <= 0 || !screenTransferInfo.ValidBack)
                 return;
             if (_transferHistory.Count >= _historySize)
                 _transferHistory.RemoveAt(0);

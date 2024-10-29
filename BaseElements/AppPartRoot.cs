@@ -5,10 +5,10 @@ namespace AppStructure.BaseElements
 {
     public interface IAppStructurePart<in TAppModel, in TAppConfig>
     {
-        void PreInitialize();
-        Task<bool> InitializeAsync(TAppConfig appConfig);
-        Task<bool> BindAsync(TAppModel appModel);
-        Task<bool> PostInitializeAsync();
+        public void PreInitialize();
+        public Task<bool> InitializeAsync(TAppConfig appConfig);
+        public Task<bool> BindAsync(TAppModel appModel);
+        public Task<bool> PostInitializeAsync();
     }
 
     public abstract class AppPartRoot<TAppModel, TAppConfig> : MonoBehaviour, IAppStructurePart<TAppModel, TAppConfig>

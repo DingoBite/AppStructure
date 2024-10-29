@@ -43,15 +43,15 @@ namespace AppStructure
             return true;
         }
 
-        public virtual void EnableOnTransfer(TransferInfo<TState> transferInfo)
+        public virtual async Task EnableOnTransferAsync(TransferInfo<TState> transferInfo)
         {
-            StateElements.ProcessStateViewElements(s => s.EnableElement(transferInfo));
+            await StateElements.ProcessStateViewElementsAsync(s => s.EnableElementAsync(transferInfo));
         }
 
-        public virtual void DisableOnTransfer(TransferInfo<TState> transferInfo)
+        public virtual async Task DisableOnTransferAsync(TransferInfo<TState> transferInfo)
         {
             IsActive = false;
-            StateElements.ProcessStateViewElements(s => s.DisableElement(transferInfo));
+            await StateElements.ProcessStateViewElementsAsync(s => s.DisableElementAsync(transferInfo));
         }
 
         protected void InvokeOrWaitActiveCacheAction(Action action)

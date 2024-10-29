@@ -44,17 +44,17 @@ namespace AppStructure
             return true;
         }
         
-        public bool ApplyTransfer(TransferInfo<TState> transferInfo)
+        public async Task<bool> ApplyTransferAsync(TransferInfo<TState> transferInfo)
         {
             if (transferInfo.IsNone) return false;
 
             try
             {
                 if (_stateViews.TryGetValue(transferInfo.From, out var stateView))
-                    FromStateViewTransferHandle(transferInfo, stateView);
+                    await FromStateViewTransferHandleAsync(transferInfo, stateView);
 
                 if (_stateViews.TryGetValue(transferInfo.To, out stateView))
-                    ToStateViewTransferHandle(transferInfo, stateView);
+                    await ToStateViewTransferHandleAsync(transferInfo, stateView);
                 
                 foreach (var element in _staticScreenViewElements)
                 {
@@ -71,7 +71,7 @@ namespace AppStructure
             return true;
         }
 
-        protected virtual void ToStateViewTransferHandle(TransferInfo<TState> transferInfo, AppStateView<TState, TAppModel, TAppConfig> appStateView) => appStateView.EnableOnTransfer(transferInfo);
-        protected virtual void FromStateViewTransferHandle(TransferInfo<TState> transferInfo, AppStateView<TState, TAppModel, TAppConfig> appStateView) => appStateView.DisableOnTransfer(transferInfo);
+        private static async Task ToStateViewTransferHandleAsync(TransferInfo<TState> transferInfo, AppStateView<TState, TAppModel, TAppConfig> appStateView) => await appStateView.EnableOnTransferAsync(transferInfo);
+        private static async Task FromStateViewTransferHandleAsync(TransferInfo<TState> transferInfo, AppStateView<TState, TAppModel, TAppConfig> appStateView) => await appStateView.DisableOnTransferAsync(transferInfo);
     }
 }

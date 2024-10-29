@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace AppStructure
@@ -17,12 +18,6 @@ namespace AppStructure
             base.StartEnable();
         }
 
-        public override void DisableOnTransfer(TransferInfo<TState> transferInfo)
-        {
-            base.DisableOnTransfer(transferInfo);
-            DisableCompletely();
-        }
-
         protected override void DisableCompletely()
         {
             base.DisableCompletely();
@@ -30,10 +25,16 @@ namespace AppStructure
                 Canvas.enabled = false;
         }
 
-        public override void EnableOnTransfer(TransferInfo<TState> transferInfo)
+        public override async Task DisableOnTransferAsync(TransferInfo<TState> transferInfo)
+        {
+            await base.DisableOnTransferAsync(transferInfo);
+            DisableCompletely();
+        }
+
+        public override async Task EnableOnTransferAsync(TransferInfo<TState> transferInfo)
         {
             StartEnable();
-            base.EnableOnTransfer(transferInfo);
+            await base.EnableOnTransferAsync(transferInfo);
         }
 
         protected sealed override void SetDefaultValues()
