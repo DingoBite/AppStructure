@@ -2,7 +2,8 @@
     "name": "AYellowpaper.SerializedCollections.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:28761ce3c65c6ba4c83226a0cea3666f"
+        "NaughtyAttributes.Core",
+        "AYellowpaper.SerializedCollections"
     ],
     "includePlatforms": [
         "Editor"
