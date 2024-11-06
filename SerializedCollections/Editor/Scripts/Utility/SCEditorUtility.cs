@@ -78,7 +78,35 @@ namespace AYellowpaper.SerializedCollections.Editor
             var getDrawerMethod = attributeUtilityType.GetMethod("GetDrawerTypeForType", BindingFlags.Static | BindingFlags.NonPublic);
             if (getDrawerMethod == null)
                 return false;
-            return getDrawerMethod.Invoke(null, new object[] { type, null, false }) != null;
+            
+            try
+            {
+                return getDrawerMethod.Invoke(null, new object[] { type }) != null;
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            try
+            {
+                return getDrawerMethod.Invoke(null, new object[] { type, false }) != null;
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            try
+            {
+                return getDrawerMethod.Invoke(null, new object[] { type, null, false }) != null;
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            return false;
         }
 
         internal static void AddGenericMenuItem(GenericMenu genericMenu, bool isOn, bool isEnabled, GUIContent content, GenericMenu.MenuFunction action)
