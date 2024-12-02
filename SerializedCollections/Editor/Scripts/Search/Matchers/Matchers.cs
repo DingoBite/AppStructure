@@ -15,6 +15,7 @@ namespace AYellowpaper.SerializedCollections.Editor.Search
             _registeredMatchers.Add(new NumericMatcher());
             _registeredMatchers.Add(new StringMatcher());
             _registeredMatchers.Add(new EnumMatcher());
+            _registeredMatchers.Add(new NameMatcher());
         }
 
         public static void AddMatcher(Matcher matcher)
