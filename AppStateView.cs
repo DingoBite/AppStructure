@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AppStructure.BaseElements;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace AppStructure
 {
@@ -12,7 +13,9 @@ namespace AppStructure
         [SerializeField] protected List<StateViewElement<TState, TAppModel, TAppConfig>> StateElements;
         
         private readonly List<Action> _cachedEnableChanges = new ();
+        private GraphicRaycaster _graphicRaycaster;
 
+        protected GraphicRaycaster GraphicRaycaster => _graphicRaycaster ??= GetComponent<GraphicRaycaster>();
         public bool IsActive { get; protected set; }
 
         public override void PreInitialize()
@@ -20,6 +23,8 @@ namespace AppStructure
             GeneralElements.ProcessGeneralViewElements(s => s.PreInitialize());
             StateElements.ProcessStateViewElements(s => s.PreInitialize());
             SetDefaultValues();
+            if (GraphicRaycaster != null)
+                GraphicRaycaster.enabled = false;
         }
         
         public override async Task<bool> InitializeAsync(TAppConfig appConfig)
@@ -50,6 +55,8 @@ namespace AppStructure
 
         public virtual async Task DisableOnTransferAsync(TransferInfo<TState> transferInfo)
         {
+            if (GraphicRaycaster != null)
+                GraphicRaycaster.enabled = true;
             IsActive = false;
             await StateElements.ProcessStateViewElementsAsync(s => s.DisableElementAsync(transferInfo));
         }
@@ -64,6 +71,9 @@ namespace AppStructure
         
         protected virtual void StartEnable()
         {
+            if (GraphicRaycaster != null)
+                GraphicRaycaster.enabled = true;
+            
             gameObject.SetActive(true);
             IsActive = true;
             foreach (var action in _cachedEnableChanges)
