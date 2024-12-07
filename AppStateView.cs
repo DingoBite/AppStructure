@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AppStructure.BaseElements;
 using UnityEngine;
@@ -94,5 +95,10 @@ namespace AppStructure
         }
 
         protected abstract void SetDefaultValues();
+        
+        protected IEnumerable<MonoBehaviour> GetAllElementsBehaviours()
+        {
+            return GeneralElements.Select(e => (MonoBehaviour) e).Concat(StateElements.Select(e => (MonoBehaviour) e));
+        }
     }
 }
