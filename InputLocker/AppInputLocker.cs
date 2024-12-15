@@ -7,7 +7,7 @@ namespace AppStructure.InputLocker
         protected TLockMessage LastLockMessage { get; private set; }
         protected long LockFlags { get; private set; }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             LockFlags = 0;
             Disable();
