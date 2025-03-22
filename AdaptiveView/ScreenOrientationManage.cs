@@ -37,7 +37,7 @@ namespace AppStructure.AdaptiveView
 
         private void OnUpdate()
         {
-            var orientation = AutorotationToOrientation();
+            var orientation = Screen.orientation;
             if (orientation == _previousOrientation)
                 return;
             foreach (var screenOrientationHandler in _screenOrientationHandlers.Where(h => h != null))
@@ -47,22 +47,6 @@ namespace AppStructure.AdaptiveView
             OrientationChange?.Invoke(_previousOrientation, orientation);
             if (Screen.autorotateToPortrait)
                 _previousOrientation = orientation;
-        }
-
-        private ScreenOrientation AutorotationToOrientation()
-        {
-            // if (Application.isEditor)
-            return Screen.orientation;
-            
-            if (Screen.autorotateToPortrait)
-                return ScreenOrientation.Portrait;
-            if (Screen.autorotateToLandscapeLeft)
-                return ScreenOrientation.LandscapeLeft;
-            if (Screen.autorotateToLandscapeRight)
-                return ScreenOrientation.LandscapeRight;
-            if (Screen.autorotateToPortraitUpsideDown)
-                return ScreenOrientation.PortraitUpsideDown;
-            return ScreenOrientation.AutoRotation;
         }
     }
 }
