@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace AppStructure.AdaptiveView
+namespace AppStructure.AdaptiveView.Core
 {
     public class FullPosition : ScriptableObject
     {

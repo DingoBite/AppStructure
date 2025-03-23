@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AppStructure.AdaptiveView
+namespace AppStructure.AdaptiveView.Core
 {
     public class RectFullPosition : FullPosition
     {

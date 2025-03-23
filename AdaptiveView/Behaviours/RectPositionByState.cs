@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppStructure.AdaptiveView.Core;
 using AYellowpaper.SerializedCollections;
 using DingoUnityExtensions.MonoBehaviours.UI;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
-namespace AppStructure.AdaptiveView
+namespace AppStructure.AdaptiveView.Behaviours
 {
     public class RectPositionByState : UIBehaviour
     {

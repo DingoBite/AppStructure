@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AppStructure.AdaptiveView
+namespace AppStructure.AdaptiveView.Behaviours
 {
     public interface IScreenOrientationHandler
     {

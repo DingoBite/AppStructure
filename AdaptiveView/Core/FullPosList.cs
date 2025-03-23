@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AppStructure.AdaptiveView
+namespace AppStructure.AdaptiveView.Core
 {
     [Serializable]
     public class FullPosList

@@ -6,7 +6,7 @@ using AppStructure.BaseElements;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace AppStructure
+namespace AppStructure.Utils
 {
     public static class Extensions
     {

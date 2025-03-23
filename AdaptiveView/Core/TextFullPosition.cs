@@ -1,7 +1,7 @@
 ﻿using System;
 using TMPro;
 
-namespace AppStructure.AdaptiveView
+namespace AppStructure.AdaptiveView.Core
 {
     [Serializable]
     public class TextFullPosition : RectFullPosition

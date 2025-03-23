@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AppStructure.AdaptiveView.Behaviours;
 using UnityEngine;
 
-namespace AppStructure.AdaptiveView
+namespace AppStructure.AdaptiveView.Core
 {
     public class RectFullPositionByState : RectFullPosition
     {
