@@ -56,9 +56,15 @@ namespace AppStructure.AdaptiveView
             {
                 RectFullPosition rectFullPos;
                 if (rt.TryGetComponent<TMP_Text>(out var text))
-                    rectFullPos = ScriptableObject.CreateInstance<TextFullPosition>().Initialize(text);
+                {
+                    rectFullPos = ScriptableObject.CreateInstance<TextFullPosition>();
+                    rectFullPos.Apply(text);
+                }
                 else
-                    rectFullPos = ScriptableObject.CreateInstance<RectFullPosition>().Initialize(rt);
+                {
+                    rectFullPos = ScriptableObject.CreateInstance<RectFullPosition>();
+                    rectFullPos.Apply(rectFullPos);
+                }
 
                 var index = _indexForBake;
                 if (values.Count == 0)
@@ -77,7 +83,7 @@ namespace AppStructure.AdaptiveView
                 else
                 {
                     var prevFullPos = values.RectFullPositions[index];
-                    rectFullPos.IgnoreActiveBake = prevFullPos.IgnoreActiveBake;
+                    rectFullPos.IgnoreActivenessBake = prevFullPos.IgnoreActivenessBake;
                     values.RectFullPositions[index] = rectFullPos;
                 }
                 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace AppStructure
 {
     [Serializable]
-    public class TransferInfo<TState> : IComparable<TransferInfo<TState>> where TState : Enum
+    public class TransferInfo<TState>
     {
         public readonly TState From;
         public readonly TState To;
@@ -22,17 +22,8 @@ namespace AppStructure
         
         public TransferInfo<TState> SwapStates(bool isFromBack) => new(To, From, isFromBack);
         public TransferInfo<TState> SwapStates() => new(To, From, IsFromBack);
-
-        public int CompareTo(TransferInfo<TState> other)
-        {
-            if (ReferenceEquals(this, other)) return 0;
-            if (ReferenceEquals(null, other)) return 1;
-            var fromComparison = From.CompareTo(other.From);
-            if (fromComparison != 0) return fromComparison;
-            return To.CompareTo(other.To);
-        }
-
-        public bool IsNone => From.Equals(default(TState)) && To.Equals(default(TState));
+        
+        public bool IsNone => From != null && From.Equals(default(TState)) && To != null && To.Equals(default(TState));
         public bool ValidBack => !IsNone && !InvalidBackStates.Contains(From) && !InvalidBackStates.Contains(To);
         public static readonly TransferInfo<TState> None = new (default, default);
 

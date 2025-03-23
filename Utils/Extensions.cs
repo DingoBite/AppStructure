@@ -48,50 +48,50 @@ namespace AppStructure
             }
         }
 
-        public static void ProcessAppStateViews<TState, TAppModel, TAppConfig>(this IEnumerable<AppStateView<TState, TAppModel, TAppConfig>> appStateViews,
-            Action<AppStateView<TState, TAppModel, TAppConfig>> processAction) where TState : Enum
+        public static void ProcessAppStateViews<TState, TAppModel>(this IEnumerable<AppStateRoot<TState, TAppModel>> appStateViews,
+            Action<AppStateRoot<TState, TAppModel>> processAction)
         {
             appStateViews.ProcessCollectionErrorHandle(processAction, e => $"Cannot apply {nameof(processAction)} for AppStateView");
         }
         
-        public static async Task ProcessAppStateViewsAsync<TState, TAppModel, TAppConfig>(this IEnumerable<AppStateView<TState, TAppModel, TAppConfig>> appStateViews,
-            Func<AppStateView<TState, TAppModel, TAppConfig>, Task> processAction) where TState : Enum
+        public static async Task ProcessAppStateViewsAsync<TState, TAppModel>(this IEnumerable<AppStateRoot<TState, TAppModel>> appStateViews,
+            Func<AppStateRoot<TState, TAppModel>, Task> processAction)
         {
             await appStateViews.ProcessCollectionErrorHandleAsync(processAction, e => $"Cannot async apply {nameof(processAction)} for AppStateView");
         }
         
-        public static void ProcessStateViewElements<TState, TAppModel, TAppConfig>(this IEnumerable<StateViewElement<TState, TAppModel, TAppConfig>> appStateViews,
-            Action<StateViewElement<TState, TAppModel, TAppConfig>> processAction) where TState : Enum
+        public static void ProcessStateViewElements<TState, TAppModel>(this IEnumerable<StateViewElement<TState, TAppModel>> appStateViews,
+            Action<StateViewElement<TState, TAppModel>> processAction)
         {
             appStateViews.ProcessCollectionErrorHandle(processAction, e => $"Cannot apply {nameof(processAction)} for StateViewElement");
         }
         
-        public static async Task ProcessStateViewElementsAsync<TState, TAppModel, TAppConfig>(this IEnumerable<StateViewElement<TState, TAppModel, TAppConfig>> appStateViews,
-            Func<StateViewElement<TState, TAppModel, TAppConfig>, Task> processAction) where TState : Enum
+        public static async Task ProcessStateViewElementsAsync<TState, TAppModel>(this IEnumerable<StateViewElement<TState, TAppModel>> appStateViews,
+            Func<StateViewElement<TState, TAppModel>, Task> processAction)
         {
             await appStateViews.ProcessCollectionErrorHandleAsync(processAction, e => $"Cannot async apply {nameof(processAction)} for StateViewElement");
         }
         
-        public static void ProcessStaticStateViews<TState, TAppModel, TAppConfig>(this IEnumerable<StaticStateViewElement<TState, TAppModel, TAppConfig>> appStateViews,
-            Action<StaticStateViewElement<TState, TAppModel, TAppConfig>> processAction) where TState : Enum
+        public static void ProcessStaticStateViews<TState, TAppModel>(this IEnumerable<StaticStateViewElement<TState, TAppModel>> appStateViews,
+            Action<StaticStateViewElement<TState, TAppModel>> processAction)
         {
             appStateViews.ProcessCollectionErrorHandle(processAction, e => $"Cannot apply {nameof(processAction)} for StaticStateViewElement");
         }
         
-        public static async Task ProcessStaticStateViewsAsync<TState, TAppModel, TAppConfig>(this IEnumerable<StaticStateViewElement<TState, TAppModel, TAppConfig>> appStateViews,
-            Func<StaticStateViewElement<TState, TAppModel, TAppConfig>, Task> processAction) where TState : Enum
+        public static async Task ProcessStaticStateViewsAsync<TState, TAppModel>(this IEnumerable<StaticStateViewElement<TState, TAppModel>> appStateViews,
+            Func<StaticStateViewElement<TState, TAppModel>, Task> processAction)
         {
             await appStateViews.ProcessCollectionErrorHandleAsync(processAction, e => $"Cannot async apply {nameof(processAction)} for StaticStateViewElement");
         }
         
-        public static void ProcessGeneralViewElements<TAppModel, TAppConfig>(this IEnumerable<GeneralViewElement<TAppModel, TAppConfig>> appStateViews,
-            Action<GeneralViewElement<TAppModel, TAppConfig>> processAction)
+        public static void ProcessGeneralViewElements<TAppModel>(this IEnumerable<StaticViewElement<TAppModel>> appStateViews,
+            Action<StaticViewElement<TAppModel>> processAction)
         {
             appStateViews.ProcessCollectionErrorHandle(processAction, e => $"Cannot apply {nameof(processAction)} for GeneralView");
         }
         
-        public static async Task ProcessGeneralViewElementsAsync<TAppModel, TAppConfig>(this IEnumerable<GeneralViewElement<TAppModel, TAppConfig>> appStateViews,
-            Func<GeneralViewElement<TAppModel, TAppConfig>, Task> processAction)
+        public static async Task ProcessGeneralViewElementsAsync<TAppModel>(this IEnumerable<StaticViewElement<TAppModel>> appStateViews,
+            Func<StaticViewElement<TAppModel>, Task> processAction)
         {
             await appStateViews.ProcessCollectionErrorHandleAsync(processAction, e => $"Cannot async apply {nameof(processAction)} for GeneralView");
         }

@@ -12,9 +12,11 @@ namespace AppStructure.AdaptiveView
         [SerializeField] public Vector3 LocalScale = Vector3.one;
         [SerializeField] public Vector2 SizeDelta;
 
-        public RectFullPosition Initialize(RectTransform rectTransform)
+        public override void Collect(object obj)
         {
-            base.Initialize(rectTransform.gameObject);
+            if (obj is not RectTransform rectTransform)
+                return;
+            base.Collect(rectTransform.gameObject);
             AnchoredPosition = rectTransform.anchoredPosition;
             Pivot = rectTransform.pivot;
             AnchorMin = rectTransform.anchorMin;
@@ -22,12 +24,11 @@ namespace AppStructure.AdaptiveView
             LocalRotation = rectTransform.localRotation.eulerAngles;
             LocalScale = rectTransform.localScale;
             SizeDelta = rectTransform.sizeDelta;
-            return this;
         }
 
-        protected void Apply(RectTransform rectTransform)
+        public override void Apply(object obj)
         {
-            if (rectTransform == null)
+            if (obj is not RectTransform rectTransform)
                 return;
             
             rectTransform.anchoredPosition = AnchoredPosition;
@@ -37,18 +38,6 @@ namespace AppStructure.AdaptiveView
             rectTransform.localRotation = Quaternion.Euler(LocalRotation);
             rectTransform.localScale = LocalScale;
             rectTransform.sizeDelta = SizeDelta;
-        }
-
-        public override bool Apply<T>(T obj)
-        {
-            var isType = typeof(T) == typeof(RectTransform);
-            if (isType)
-            {
-                var rectTransform = obj as RectTransform;
-                base.Apply(rectTransform?.gameObject);
-                Apply(rectTransform);
-            }
-            return isType;
         }
     }
 }

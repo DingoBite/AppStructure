@@ -4,36 +4,37 @@ using UnityEngine;
 
 namespace AppStructure
 {
-    public abstract class ImmediateAppStateView<TState, TAppModel, TAppConfig> : AppStateView<TState, TAppModel, TAppConfig> where TState : Enum
+    public abstract class ImmediateAppStateRoot<TState, TAppModel> : AppStateRoot<TState, TAppModel>
     {
         private Canvas _canvas;
 
         protected Canvas Canvas => _canvas ??= GetComponent<Canvas>();
         
-        protected override void StartEnable()
+        protected override void StartEnable(TransferInfo<TState> transferInfo)
         {
             if (Canvas != null)
                 Canvas.enabled = true;
             
-            base.StartEnable();
+            base.StartEnable(transferInfo);
         }
-
-        protected override void DisableCompletely()
+        
+        protected override void DisableCompletely(TransferInfo<TState> transferInfo)
         {
-            base.DisableCompletely();
+            base.DisableCompletely(transferInfo);
             if (Canvas != null)
                 Canvas.enabled = false;
         }
 
         public override async Task DisableOnTransferAsync(TransferInfo<TState> transferInfo)
         {
+            StartDisable(transferInfo);
             await base.DisableOnTransferAsync(transferInfo);
-            DisableCompletely();
+            DisableCompletely(transferInfo);
         }
 
         public override async Task EnableOnTransferAsync(TransferInfo<TState> transferInfo)
         {
-            StartEnable();
+            StartEnable(transferInfo);
             await base.EnableOnTransferAsync(transferInfo);
         }
 

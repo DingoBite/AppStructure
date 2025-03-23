@@ -5,19 +5,15 @@ using UnityEngine;
 
 namespace AppStructure.BaseElements
 {
-    public abstract class StateViewElement<TState, TAppModel, TAppConfig> : SubscribableBehaviour where TState : Enum
+    public abstract class StateViewElement<TState, TAppModel> : MonoBehaviour
     {
-        [SerializeField] private bool _enableDisableFromState = true;
+        private bool _enabled;
         
-        private bool _binded;
-        protected sealed override bool ForSubscriptionPrepared => !_enableDisableFromState && _binded;
-
         public virtual void PreInitialize() {}
-        public virtual Task InitializeAsync(TAppConfig appConfig) => Task.CompletedTask;
+        public virtual Task InitializeAsync() => Task.CompletedTask;
         public virtual Task BindAsync(TAppModel appModel)
         {
-            _binded = true;
-            if (ForSubscriptionPrepared && isActiveAndEnabled)
+            if (_enabled)
             {
                 UnsubscribeOnly();
                 SubscribeOnly();
@@ -26,28 +22,26 @@ namespace AppStructure.BaseElements
         }
 
         public virtual Task PostInitializeAsync() => Task.CompletedTask;
+        
+        public virtual Task EnableElementAsync(TransferInfo<TState> transferInfo) => Task.CompletedTask;
 
-        public abstract Task EnableElementAsync(TransferInfo<TState> transferInfo);
-
-        public virtual void OnStartScreenEnable()
+        public virtual void OnStartStateEnable(TransferInfo<TState> transferInfo)
         {
-            if (_enableDisableFromState)
-            {
-                UnsubscribeOnly();
-                SubscribeOnly();
-            }
+            _enabled = true;
+            UnsubscribeOnly();
+            SubscribeOnly();
         }
 
-        public virtual Task DisableElementAsync(TransferInfo<TState> transferInfo)
+        public virtual void OnStartScreenDisable(TransferInfo<TState> transferInfo)
         {
-            if (_enableDisableFromState)
-                UnsubscribeOnly();
-            return Task.CompletedTask;
+            _enabled = false;
+            UnsubscribeOnly();
         }
         
-        public abstract void OnCompletelyDisable();
+        public virtual Task DisableElementAsync(TransferInfo<TState> transferInfo) => Task.CompletedTask;
+        public virtual void OnCompletelyDisable(TransferInfo<TState> transferInfo) { }
         
-        protected override void SubscribeOnly() {}
-        protected override void UnsubscribeOnly() {}
+        protected virtual void SubscribeOnly() {}
+        protected virtual void UnsubscribeOnly() {}
     }
 }

@@ -7,24 +7,28 @@ using UnityEngine;
 
 namespace AppStructure
 {
-    public abstract class AppMainViewsRoot<TState, TAppModel, TAppConfig> : AppPartRoot<TAppModel, TAppConfig> where TState : Enum
+    public abstract class AppMainViewsRoot<TState, TAppModel> : AppPartRoot<TAppModel>
     {
-        [SerializedDictionary("State", "View")]
-        [SerializeField] private SerializedDictionary<TState, AppStateView<TState, TAppModel, TAppConfig>> _stateViews;
-        [SerializeField] private List<StaticStateViewElement<TState, TAppModel, TAppConfig>> _staticScreenViewElements;
-        [SerializeField] private List<GeneralViewElement<TAppModel, TAppConfig>> _generalViewElements;
+        private const string STATE_PREFIX = "-s-";
 
+        [SerializedDictionary("State", "View")]
+        [SerializeField] private SerializedDictionary<TState, AppStateRoot<TState, TAppModel>> _stateViews;
+        [SerializeField] private List<StaticStateViewElement<TState, TAppModel>> _staticScreenViewElements;
+        [SerializeField] private List<StaticViewElement<TAppModel>> _generalViewElements;
+
+        public IEnumerable<TState> States => _stateViews.Keys;
+        
         public override void PreInitialize()
         {
             _stateViews.Values.ProcessAppStateViews(s => s.PreInitialize());
             _staticScreenViewElements.ProcessStaticStateViews(s => s.PreInitialize());
         }
 
-        public override async Task<bool> InitializeAsync(TAppConfig appConfig)
+        public override async Task<bool> InitializeAsync()
         {
-            await _stateViews.Values.ProcessAppStateViewsAsync(s => s.InitializeAsync(appConfig));
-            await _staticScreenViewElements.ProcessStaticStateViewsAsync(s => s.InitializeAsync(appConfig));
-            await _generalViewElements.ProcessGeneralViewElementsAsync(s => s.InitializeAsync(appConfig));
+            await _stateViews.Values.ProcessAppStateViewsAsync(s => s.InitializeAsync());
+            await _staticScreenViewElements.ProcessStaticStateViewsAsync(s => s.InitializeAsync());
+            await _generalViewElements.ProcessGeneralViewElementsAsync(s => s.InitializeAsync());
             return true;
         }
 
@@ -71,7 +75,15 @@ namespace AppStructure
             return true;
         }
 
-        private static async Task ToStateViewTransferHandleAsync(TransferInfo<TState> transferInfo, AppStateView<TState, TAppModel, TAppConfig> appStateView) => await appStateView.EnableOnTransferAsync(transferInfo);
-        private static async Task FromStateViewTransferHandleAsync(TransferInfo<TState> transferInfo, AppStateView<TState, TAppModel, TAppConfig> appStateView) => await appStateView.DisableOnTransferAsync(transferInfo);
+        private void OnValidate()
+        {
+            foreach (var (key, stateView) in _stateViews)
+            {
+                stateView.name = $"{STATE_PREFIX}{key}";
+            }
+        }
+
+        private static async Task ToStateViewTransferHandleAsync(TransferInfo<TState> transferInfo, AppStateRoot<TState, TAppModel> appStateRoot) => await appStateRoot.EnableOnTransferAsync(transferInfo);
+        private static async Task FromStateViewTransferHandleAsync(TransferInfo<TState> transferInfo, AppStateRoot<TState, TAppModel> appStateRoot) => await appStateRoot.DisableOnTransferAsync(transferInfo);
     }
 }

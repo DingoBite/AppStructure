@@ -8,45 +8,51 @@ using UnityEngine;
 
 namespace AppStructure.AdaptiveView
 {
-    public abstract class ScreenOrientationManage<TState, TAppModel, TAppConfig> : StaticStateViewElement<TState, TAppModel, TAppConfig> where TState : Enum
+    public abstract class ScreenOrientationManage<TState, TAppModel> : StaticStateViewElement<TState, TAppModel> where TState : Enum
     {
-        public event Action<ScreenOrientation, ScreenOrientation> OrientationChange;
-
-        [SerializeField] private List<RotatableAppStateImmediateStateView<TState, TAppModel, TAppConfig>> _screenOrientationHandlers;
+        [SerializeField] private List<RotatableAppStateImmediateStateRoot<TState, TAppModel>> _screenOrientationHandlers;
         [SerializeField] private List<TState> _onlyPortraitScreens;
+        [SerializeField] private List<TState> _onlyLandscapeScreens;
 
-        private ScreenOrientation _previousOrientation = ScreenOrientation.Portrait;
-        public ScreenOrientation CurrentOrientation => _previousOrientation;
+        private ScreenOrientation _currentOrientation = ScreenOrientation.Portrait;
         
-        public override Task InitializeAsync(TAppConfig appConfig)
+        public override Task InitializeAsync()
         {
             CoroutineParent.AddUpdater(this, OnUpdate);
-            return base.InitializeAsync(appConfig);
+            return base.InitializeAsync();
         }
 
         public override void Transfer(TransferInfo<TState> transferInfo)
         {
-            if (!_onlyPortraitScreens.Contains(transferInfo.To))
+            if (_onlyPortraitScreens.Contains(transferInfo.To))
+            {
+                Screen.orientation = ScreenOrientation.Portrait;
+            }
+            else if (_onlyLandscapeScreens.Contains(transferInfo.To))
+            {
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
+            }
+            else
             {
                 Screen.orientation = ScreenOrientation.AutoRotation;
-                return;
+                foreach (var handler in _screenOrientationHandlers)
+                {
+                    handler.Adapt(ScreenOrientation.AutoRotation, _currentOrientation);
+                }
             }
-
-            Screen.orientation = ScreenOrientation.Portrait;
         }
 
         private void OnUpdate()
         {
             var orientation = Screen.orientation;
-            if (orientation == _previousOrientation)
+            if (orientation == _currentOrientation)
                 return;
             foreach (var screenOrientationHandler in _screenOrientationHandlers.Where(h => h != null))
             {
-                screenOrientationHandler.Adapt(_previousOrientation, orientation);
+                screenOrientationHandler.Adapt(_currentOrientation, orientation);
             }
-            OrientationChange?.Invoke(_previousOrientation, orientation);
             if (Screen.autorotateToPortrait)
-                _previousOrientation = orientation;
+                _currentOrientation = orientation;
         }
     }
 }

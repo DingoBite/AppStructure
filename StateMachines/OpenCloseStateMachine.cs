@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AppStructure.StateMachines
 {
-    public abstract class OpenCloseStateMachine<TState> : MonoBehaviour where TState : Enum
+    public abstract class OpenCloseStateMachine<TState> : MonoBehaviour
     {
         [field: SerializeField] public TState LastOpenedState { get; private set; }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AppStructure.StateMachines
 {
-    public abstract class GoBackSupportStateMachine<TState> : MonoBehaviour where TState : Enum
+    public abstract class GoBackSupportStateMachine<TState> : MonoBehaviour
     {
         [field: SerializeField] public TState CurrentState { get; private set; }
         

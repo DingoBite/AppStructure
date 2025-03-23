@@ -7,7 +7,7 @@ namespace AppStructure.AdaptiveView
     [Serializable]
     public class FullPosList
     {
-        [SerializeReference] public List<RectFullPosition> RectFullPositions = new();
+        [SerializeReference] public List<FullPosition> RectFullPositions = new();
         public int Count => RectFullPositions.Count;
     }
 }

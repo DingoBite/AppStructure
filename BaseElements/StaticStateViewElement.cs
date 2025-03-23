@@ -2,8 +2,8 @@ using System;
 
 namespace AppStructure.BaseElements
 {
-    public abstract class StaticStateViewElement<TState, TAppModel, TAppConfig> : GeneralViewElement<TAppModel, TAppConfig> where TState : Enum
+    public abstract class StaticStateViewElement<TState, TAppModel> : StaticViewElement<TAppModel>
     {
-        public abstract void Transfer(TransferInfo<TState> transferInfo);
+        public virtual void Transfer(TransferInfo<TState> transferInfo) { }
     }
 }
