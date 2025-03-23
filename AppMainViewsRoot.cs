@@ -80,7 +80,8 @@ namespace AppStructure
         {
             foreach (var (key, stateView) in _stateViews)
             {
-                stateView.name = $"{STATE_PREFIX}{key}";
+                if (stateView != null) 
+                    stateView.name = $"{STATE_PREFIX}{key}";
             }
         }
 
