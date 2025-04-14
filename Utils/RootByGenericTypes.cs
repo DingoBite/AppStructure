@@ -10,7 +10,7 @@ namespace AppStructure.Utils
 
         protected IReadOnlyDictionary<Type, TValue> ValuesByTypes => _valuesByTypes;
         
-        public void RegisterModel<T>(T model) where T : TValue
+        public void Register<T>(T model) where T : TValue
         {
             try
             {
@@ -22,7 +22,7 @@ namespace AppStructure.Utils
             }
         }
 
-        public T Model<T>() where T : class, TValue
+        public T Get<T>() where T : class, TValue
         {
             if (!_valuesByTypes.TryGetValue(typeof(T), out var modelBase))
                 return null;
