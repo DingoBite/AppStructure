@@ -84,13 +84,13 @@ namespace AppStructure.Utils
             await appStateViews.ProcessCollectionErrorHandleAsync(processAction, e => $"Cannot async apply {nameof(processAction)} for StaticStateViewElement");
         }
         
-        public static void ProcessGeneralViewElements<TAppModel>(this IEnumerable<StaticViewElement<TAppModel>> appStateViews,
+        public static void ProcessStaticViewElements<TAppModel>(this IEnumerable<StaticViewElement<TAppModel>> appStateViews,
             Action<StaticViewElement<TAppModel>> processAction)
         {
             appStateViews.ProcessCollectionErrorHandle(processAction, e => $"Cannot apply {nameof(processAction)} for GeneralView");
         }
         
-        public static async Task ProcessGeneralViewElementsAsync<TAppModel>(this IEnumerable<StaticViewElement<TAppModel>> appStateViews,
+        public static async Task ProcessStaticViewElementsAsync<TAppModel>(this IEnumerable<StaticViewElement<TAppModel>> appStateViews,
             Func<StaticViewElement<TAppModel>, Task> processAction)
         {
             await appStateViews.ProcessCollectionErrorHandleAsync(processAction, e => $"Cannot async apply {nameof(processAction)} for GeneralView");

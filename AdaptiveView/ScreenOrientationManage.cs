@@ -22,7 +22,7 @@ namespace AppStructure.AdaptiveView
             return base.InitializeAsync();
         }
 
-        public override void Transfer(TransferInfo<TState> transferInfo)
+        public override void StaticTransfer(TransferInfo<TState> transferInfo)
         {
             if (_onlyPortraitScreens.Contains(transferInfo.To))
             {
