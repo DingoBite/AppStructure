@@ -7,13 +7,13 @@ namespace AppStructure.BaseElements
 {
     public abstract class StateViewElement<TState, TAppModel> : MonoBehaviour
     {
-        private bool _enabled;
+        protected bool Enabled { get; private set; }
         
         public virtual void PreInitialize() {}
         public virtual Task InitializeAsync() => Task.CompletedTask;
         public virtual Task BindAsync(TAppModel appModel)
         {
-            if (_enabled)
+            if (Enabled)
             {
                 UnsubscribeOnly();
                 SubscribeOnly();
@@ -27,14 +27,14 @@ namespace AppStructure.BaseElements
 
         public virtual void OnStartStateEnable(TransferInfo<TState> transferInfo)
         {
-            _enabled = true;
+            Enabled = true;
             UnsubscribeOnly();
             SubscribeOnly();
         }
 
         public virtual void OnStartScreenDisable(TransferInfo<TState> transferInfo)
         {
-            _enabled = false;
+            Enabled = false;
             UnsubscribeOnly();
         }
         
