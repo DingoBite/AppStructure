@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace DingoUnityExtensions.DingoGameFlow.CommandReceiverSystem
+namespace AppStructure.DingoGameFlow.CommandReceiverSystem
 {
     public readonly struct CommandReceiveResponse
     {

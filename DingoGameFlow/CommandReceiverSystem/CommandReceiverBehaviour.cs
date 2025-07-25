@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace DingoUnityExtensions.DingoGameFlow.CommandReceiverSystem
+namespace AppStructure.DingoGameFlow.CommandReceiverSystem
 {
     public abstract class CommandReceiverBehaviour<T> : MonoBehaviour, ICommandReceiver<T>
     {

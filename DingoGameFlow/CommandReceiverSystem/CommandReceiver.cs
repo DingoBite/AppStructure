@@ -1,7 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace DingoUnityExtensions.DingoGameFlow.CommandReceiverSystem
+namespace AppStructure.DingoGameFlow.CommandReceiverSystem
 {
     public interface ICommandReceiver<in T>
     {

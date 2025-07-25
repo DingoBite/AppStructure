@@ -1,4 +1,4 @@
-namespace DingoUnityExtensions.DingoGameFlow.CommandReceiverSystem
+namespace AppStructure.DingoGameFlow.CommandReceiverSystem
 {
     public enum CommandReceiveState
     {

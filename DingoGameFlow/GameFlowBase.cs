@@ -1,9 +1,10 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using DingoProjectAppStructure.Core.Model;
+using DingoUnityExtensions;
 using UnityEngine;
 
-namespace DingoUnityExtensions.DingoGameFlow
+namespace AppStructure.DingoGameFlow
 {
     public abstract class GameFlowBase : MonoBehaviour
     {
