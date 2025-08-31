@@ -9,7 +9,9 @@ namespace AppStructure
         [SerializeField] private bool _isPrepared;
         [SerializeField] private bool _isStarted;
         [SerializeField] private bool _isFinalized;
-        
+
+        private void Awake() => AwakePrepare();
+
         private IEnumerator Start()
         {
             yield return StartCoroutine(PrepareBootstrapProcess(b => _isPrepared = b));
@@ -24,6 +26,7 @@ namespace AppStructure
                 EndErrorBootstrapWithErrors(_isPrepared, _isStarted, _isFinalized);
         }
 
+        protected abstract void AwakePrepare();
         protected abstract IEnumerator PrepareBootstrapProcess(Action<bool> callback);
         protected abstract IEnumerator StartBootstrapProcess(Action<bool> callback);
         protected abstract IEnumerator FinalizeBootstrapProcess(Action<bool> callback);
