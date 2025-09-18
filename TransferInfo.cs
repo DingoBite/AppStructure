@@ -23,7 +23,7 @@ namespace AppStructure
         public TransferInfo<TState> SwapStates(bool isFromBack) => new(To, From, isFromBack);
         public TransferInfo<TState> SwapStates() => new(To, From, IsFromBack);
         
-        public bool IsNone => From != null && From.Equals(default(TState)) && To != null && To.Equals(default(TState));
+        public bool IsNone => From == null || To == null || From != null && From.Equals(default(TState)) && To != null && To.Equals(default(TState));
         public bool ValidBack => !IsNone && !InvalidBackStates.Contains(From) && !InvalidBackStates.Contains(To);
         public static readonly TransferInfo<TState> None = new (default, default);
 
