@@ -21,7 +21,11 @@ namespace AppStructure.AdaptiveView
                 _rectPositionByState.ApplyPosition(1);
         }
 
-        [Button]
+#if VINSPECTOR_EXISTS
+        [VInspector.Button]
+#else
+        [NaughtyAttributes.Button]
+#endif
         private void AdaptDebug() => Adapt(ScreenOrientation.AutoRotation, _screenOrientation);
     }
 }

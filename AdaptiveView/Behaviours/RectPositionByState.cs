@@ -103,7 +103,11 @@ namespace AppStructure.AdaptiveView.Behaviours
             ChangeBakedState();
         }
         
-        [Button]
+#if VINSPECTOR_EXISTS
+        [VInspector.Button]
+#else
+        [NaughtyAttributes.Button]
+#endif
         private void BakeState() => ChangeBakedState();
     }
 }
