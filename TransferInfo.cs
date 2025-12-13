@@ -10,6 +10,8 @@ namespace AppStructure
         public readonly TState To;
         public readonly bool IsFromBack;
 
+        public object Parameters;
+
         private static readonly HashSet<TState> EmptyInvalidBackStates = new();
         protected virtual HashSet<TState> InvalidBackStates => EmptyInvalidBackStates;
         
