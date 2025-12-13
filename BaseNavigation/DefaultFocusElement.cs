@@ -40,6 +40,15 @@ namespace AppStructure.BaseNavigation
                 CoroutineParent.RemoveUpdater(Providers);
         }
 
+        public static void ClearHistory(IFocusProvider provider)
+        {
+            if (LastSelected.Remove(provider, out var last))
+            {
+                if (_best == provider && EventSystem.current != null && EventSystem.current.currentSelectedGameObject == last)
+                    EventSystem.current.SetSelectedGameObject(null);
+            }
+        }
+
         public static void UpdateFocus()
         {
             if (EventSystem.current == null)
@@ -53,7 +62,6 @@ namespace AppStructure.BaseNavigation
 
             var prev = _best;
             _best = Providers.Where(p => p != null && p.FocusNode != null).OrderByDescending(p => p.Layer).FirstOrDefault();
-
             if (_best == null)
                 return;
 
@@ -98,6 +106,7 @@ namespace AppStructure.BaseNavigation
         public void RewriteFocusElement(GameObject navigationNode)
         {
             _navigationNode = navigationNode;
+            FocusManager.ClearHistory(this);
         }
     }
 }
