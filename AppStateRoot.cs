@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AppStructure.BaseElements;
 using AppStructure.Utils;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace AppStructure
@@ -14,9 +15,6 @@ namespace AppStructure
         [SerializeField] protected List<StateViewElement<TState, TAppModel>> _stateElements;
         [SerializeField] protected List<StaticStateViewElement<TState, TAppModel>> _staticElements;
 
-        private GraphicRaycaster _graphicRaycaster;
-
-        protected GraphicRaycaster GraphicRaycaster => _graphicRaycaster ??= GetComponent<GraphicRaycaster>();
         public bool IsActive { get; protected set; }
 
         public override void PreInitialize()
@@ -24,8 +22,6 @@ namespace AppStructure
             _staticElements.ProcessStaticViewElements(s => s.PreInitialize());
             _stateElements.ProcessStateViewElements(s => s.PreInitialize());
             SetDefaultValues();
-            if (GraphicRaycaster != null)
-                GraphicRaycaster.enabled = false;
         }
         
         public override async Task<bool> InitializeAsync()
@@ -53,29 +49,22 @@ namespace AppStructure
         {
             _staticElements.ProcessStaticStateViews(s => s.Enable(transferInfo));
             await _stateElements.ProcessStateViewElementsAsync(s => s.EnableElementAsync(transferInfo));
-            await _stateElements.ProcessStateViewElementsAsync(s => s.EnableElementAsync(transferInfo));
         }
 
         public virtual async Task DisableOnTransferAsync(TransferInfo<TState> transferInfo)
         {
             _staticElements.ProcessStaticStateViews(s => s.Disable(transferInfo));
             await _stateElements.ProcessStateViewElementsAsync(s => s.DisableElementAsync(transferInfo));
-            await _stateElements.ProcessStateViewElementsAsync(s => s.DisableElementAsync(transferInfo));
         }
 
         protected virtual void StartDisable(TransferInfo<TState> transferInfo)
         {
-            if (GraphicRaycaster != null)
-                GraphicRaycaster.enabled = true;
             IsActive = false;
             _stateElements.ProcessStateViewElements(s => s.OnStartScreenDisable(transferInfo));
         }
         
         protected virtual void StartEnable(TransferInfo<TState> transferInfo)
         {
-            if (GraphicRaycaster != null)
-                GraphicRaycaster.enabled = true;
-            
             gameObject.SetActive(true);
             IsActive = true;
 
