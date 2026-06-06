@@ -27,34 +27,34 @@ namespace AppStructure
         public override async Task<bool> InitializeAsync()
         {
             await _staticElements.ProcessStaticViewElementsAsync(s => s.InitializeAsync());
-            await _stateElements.ProcessStateViewElementsAsync(s => s.InitializeAsync());
+            await _stateElements.ProcessStateViewElements(s => s.InitializeAsync());
             return true;
         }
 
         public override async Task<bool> BindAsync(TAppModel appModel) 
         {
             await _staticElements.ProcessStaticViewElementsAsync(s => s.BindAsync(appModel));
-            await _stateElements.ProcessStateViewElementsAsync(s => s.BindAsync(appModel));
+            await _stateElements.ProcessStateViewElements(s => s.BindAsync(appModel));
             return true;
         }
 
         public override async Task<bool> PostInitializeAsync()
         {
             await _staticElements.ProcessStaticViewElementsAsync(g => g.PostInitializeAsync());
-            await _stateElements.ProcessStateViewElementsAsync(g => g.PostInitializeAsync());
+            await _stateElements.ProcessStateViewElements(g => g.PostInitializeAsync());
             return true;
         }
 
-        public virtual async Task EnableOnTransferAsync(TransferInfo<TState> transferInfo)
+        public virtual void EnableOnTransfer(TransferInfo<TState> transferInfo)
         {
             _staticElements.ProcessStaticStateViews(s => s.Enable(transferInfo));
-            await _stateElements.ProcessStateViewElementsAsync(s => s.EnableElementAsync(transferInfo));
+            _stateElements.ProcessStateViewElements(s => s.EnableElement(transferInfo));
         }
 
-        public virtual async Task DisableOnTransferAsync(TransferInfo<TState> transferInfo)
+        public virtual void DisableOnTransfer(TransferInfo<TState> transferInfo)
         {
             _staticElements.ProcessStaticStateViews(s => s.Disable(transferInfo));
-            await _stateElements.ProcessStateViewElementsAsync(s => s.DisableElementAsync(transferInfo));
+            _stateElements.ProcessStateViewElements(s => s.DisableElement(transferInfo));
         }
 
         protected virtual void StartDisable(TransferInfo<TState> transferInfo)

@@ -25,18 +25,13 @@ namespace AppStructure
                 Canvas.enabled = false;
         }
 
-        public override async Task DisableOnTransferAsync(TransferInfo<TState> transferInfo)
+        public override void DisableOnTransfer(TransferInfo<TState> transferInfo)
         {
             StartDisable(transferInfo);
-            await base.DisableOnTransferAsync(transferInfo);
             DisableCompletely(transferInfo);
         }
 
-        public override async Task EnableOnTransferAsync(TransferInfo<TState> transferInfo)
-        {
-            StartEnable(transferInfo);
-            await base.EnableOnTransferAsync(transferInfo);
-        }
+        public override void EnableOnTransfer(TransferInfo<TState> transferInfo) => StartEnable(transferInfo);
 
         protected sealed override void SetDefaultValues()
         {

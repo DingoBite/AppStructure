@@ -66,7 +66,7 @@ namespace AppStructure.Utils
             appStateViews.ProcessCollectionErrorHandle(processAction, e => $"Cannot apply {nameof(processAction)} for StateViewElement");
         }
         
-        public static async Task ProcessStateViewElementsAsync<TState, TAppModel>(this IEnumerable<StateViewElement<TState, TAppModel>> appStateViews,
+        public static async Task ProcessStateViewElements<TState, TAppModel>(this IEnumerable<StateViewElement<TState, TAppModel>> appStateViews,
             Func<StateViewElement<TState, TAppModel>, Task> processAction)
         {
             await appStateViews.ProcessCollectionErrorHandleAsync(processAction, e => $"Cannot async apply {nameof(processAction)} for StateViewElement");

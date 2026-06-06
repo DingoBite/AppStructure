@@ -23,7 +23,7 @@ namespace AppStructure.BaseElements
 
         public virtual Task PostInitializeAsync() => Task.CompletedTask;
         
-        public virtual Task EnableElementAsync(TransferInfo<TState> transferInfo) => Task.CompletedTask;
+        public virtual void EnableElement(TransferInfo<TState> transferInfo) { }
 
         public virtual void OnStartStateEnable(TransferInfo<TState> transferInfo)
         {
@@ -38,7 +38,7 @@ namespace AppStructure.BaseElements
             UnsubscribeOnly();
         }
         
-        public virtual Task DisableElementAsync(TransferInfo<TState> transferInfo) => Task.CompletedTask;
+        public virtual void DisableElement(TransferInfo<TState> transferInfo) { }
         public virtual void OnCompletelyDisable(TransferInfo<TState> transferInfo) { }
         
         protected virtual void SubscribeOnly() {}
